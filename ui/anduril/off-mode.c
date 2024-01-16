@@ -147,8 +147,8 @@ uint8_t off_state(Event event, uint16_t arg) {
     }
     #endif  // if (B_TIMING_ON != B_TIMEOUT_T)
 
-    // 1 click: regular mode
-    else if (event == EV_1click) {
+    // 2 click: regular mode
+    else if (event == EV_2clicks) {
         #if (B_TIMING_ON != B_TIMEOUT_T)
         set_state(steady_state, memorized_level);
         #else
@@ -192,11 +192,12 @@ uint8_t off_state(Event event, uint16_t arg) {
         return EVENT_HANDLED;
     }
 
+    /*
     // 2 clicks: highest mode (ceiling)
     else if (event == EV_2clicks) {
         set_state(steady_state, MAX_LEVEL);
         return EVENT_HANDLED;
-    }
+    }*/
 
     // 3 clicks (initial press): off, to prep for later events
     else if (event == EV_click3_press) {
@@ -266,12 +267,12 @@ uint8_t off_state(Event event, uint16_t arg) {
 
     // click, click, long-click: strobe mode
     #ifdef USE_STROBE_STATE
-    else if (event == EV_click3_hold) {
+    else if (event == EV_1click) {
         set_state(strobe_state, 0);
         return EVENT_HANDLED;
     }
     #elif defined(USE_BORING_STROBE_STATE)
-    else if (event == EV_click3_hold) {
+    else if (event == EV_1click) {
         set_state(boring_strobe_state, 0);
         return EVENT_HANDLED;
     }
